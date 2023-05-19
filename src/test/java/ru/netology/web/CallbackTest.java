@@ -17,9 +17,7 @@ class CallbackTest {
 
     @BeforeAll
     static void setUpAll() {
-
         WebDriverManager.chromedriver().setup();
-        //System.setProperty("webdriver.chrome.driver", "./driver/win/chromedriver.exe");
     }
 
     @BeforeEach
@@ -40,14 +38,12 @@ class CallbackTest {
 
     @Test
     void shouldTestV3() {
-        driver.get("http://localhost:9999");
-        driver.findElements(By.tagName("input")).get(0).sendKeys("Сидоров Василий");
-        driver.findElements(By.tagName("input")).get(1).sendKeys("+79270000000");
-        driver.findElement(By.className("checkbox__box")).click();
-        driver.findElement(By.tagName("button")).click();
-        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.className("Success_successBlock__2L3Cw")).getText().trim();
-        assertEquals(expected, actual);
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Мамин-Сибиряк Василий");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79270000000");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        driver.findElement(By.cssSelector("button.button")).click();
+        var actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", actualText);
     }
 }
 
